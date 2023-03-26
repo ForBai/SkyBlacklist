@@ -108,6 +108,15 @@ public class BlackList {
         return blackList.containsKey(uuid);
     }
 
+    public static boolean isBlacklistedByUsernameFast(String username) {
+        for (String[] userInfo : blackList.values()) {
+            if (userInfo[0].equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static HashMap<String, String[]> getBlackList() {
         return blackList;
     }
