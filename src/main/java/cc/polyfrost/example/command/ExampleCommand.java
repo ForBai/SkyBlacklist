@@ -1,21 +1,21 @@
 package cc.polyfrost.example.command;
 
-import cc.polyfrost.example.ExampleMod;
+import cc.polyfrost.example.SkyBlacklist;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 
 /**
  * An example command implementing the Command api of OneConfig.
- * Registered in ExampleMod.java with `CommandManager.INSTANCE.registerCommand(new ExampleCommand());`
+ * Registered in SkyBlacklist.java with `CommandManager.INSTANCE.registerCommand(new ExampleCommand());`
  *
  * @see Command
  * @see Main
- * @see ExampleMod
+ * @see SkyBlacklist
  */
-@Command(value = ExampleMod.MODID, description = "Access the " + ExampleMod.NAME + " GUI.")
+@Command(value = SkyBlacklist.MODID, description = "Access the " + SkyBlacklist.NAME + " GUI.")
 public class ExampleCommand {
     @Main
     private void handle() {
-        ExampleMod.INSTANCE.config.openGui();
+        SkyBlacklist.config.openGui();
     }
 }

@@ -1,11 +1,12 @@
 package cc.polyfrost.example.hud;
 
+import cc.polyfrost.example.config.MainConfig;
 import cc.polyfrost.oneconfig.hud.SingleTextHud;
 
 /**
  * An example OneConfig HUD that is started in the config and displays text.
  *
- * @see cc.polyfrost.example.config.TestConfig#hud
+ * @see MainConfig#hud
  */
 public class TestHud extends SingleTextHud {
     public TestHud() {
