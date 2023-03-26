@@ -107,4 +107,8 @@ public class BlackList {
         String uuid = getUUIDByUsername(username);
         return blackList.containsKey(uuid);
     }
+
+    public static HashMap<String, String[]> getBlackList() {
+        return blackList;
+    }
 }

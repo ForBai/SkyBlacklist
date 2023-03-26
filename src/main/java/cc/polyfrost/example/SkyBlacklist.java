@@ -1,11 +1,12 @@
 package cc.polyfrost.example;
 
+import cc.polyfrost.example.blacklist.BlackListConfig;
 import cc.polyfrost.example.command.ExampleCommand;
 import cc.polyfrost.example.config.MainConfig;
 import cc.polyfrost.oneconfig.events.event.InitializationEvent;
+import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.Mod;
-import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
 /**
@@ -26,13 +27,16 @@ public class SkyBlacklist {
 
     public static Minecraft mc = Minecraft.getMinecraft();
 
-    public static String blackListFolder = mc.mcDataDir + "/config/SkyBlacklist/";
 
     // Register the config and commands.
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
         config = new MainConfig();
         CommandManager.INSTANCE.registerCommand(new ExampleCommand());
-        System.out.println(blackListFolder);
+        BlackListConfig.init();
+        //add shutdown hook
+        //save config
+        Runtime.getRuntime().addShutdownHook(new Thread(BlackListConfig::saveToFile));
     }
+
 }
