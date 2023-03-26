@@ -5,9 +5,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 
 public class BlackList {
-    private static HashMap<String, String[]> blackList = new HashMap<String, String[]>(); // <uuid, username[0] reason[1]>
+    private static Map<String, String[]> blackList = new HashMap<>(); // <uuid, username[0] reason[1]>
 
     //generate everything i could need to add a player by uuid/username(get the uuid by using https://api.mojang.com/users/profiles/minecraft/<username>), remove a player by uuid/username, get uuid by username, get username by uuid, get reason by uuid, get reason by username check if player is blacklisted by uuid, check if player is blacklisted by username
 
@@ -117,11 +118,11 @@ public class BlackList {
         return false;
     }
 
-    public static HashMap<String, String[]> getBlackList() {
+    public static Map<String, String[]> getBlackList() {
         return blackList;
     }
 
-    public static void setBlackList(HashMap<String, String[]> blackList) {
+    public static void setBlackList(Map<String, String[]> blackList) {
         BlackList.blackList = blackList;
     }
 }

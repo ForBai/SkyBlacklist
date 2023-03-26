@@ -1,11 +1,14 @@
 package cc.polyfrost.example;
 
+import cc.polyfrost.example.actions.Actions;
 import cc.polyfrost.example.blacklist.BlackListConfig;
 import cc.polyfrost.example.command.BlackListCommand;
 import cc.polyfrost.example.config.MainConfig;
+import cc.polyfrost.oneconfig.events.EventManager;
 import cc.polyfrost.oneconfig.events.event.InitializationEvent;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
@@ -34,6 +37,8 @@ public class SkyBlacklist {
         config = new MainConfig();
         CommandManager.INSTANCE.registerCommand(new BlackListCommand());
         BlackListConfig.init();
+        MinecraftForge.EVENT_BUS.register(new Actions());
+
         //add shutdown hook
         //save config
         Runtime.getRuntime().addShutdownHook(new Thread(BlackListConfig::saveToFile));

@@ -3,12 +3,11 @@ package cc.polyfrost.example.actions;
 import cc.polyfrost.example.blacklist.BlackList;
 import cc.polyfrost.example.config.MainConfig;
 import cc.polyfrost.example.utils.NotifyUtil;
-import cc.polyfrost.oneconfig.events.event.WorldLoadEvent;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.Collection;
 
@@ -16,7 +15,7 @@ import static cc.polyfrost.example.SkyBlacklist.mc;
 
 public class Actions {
     @SubscribeEvent
-    public static void onChat(net.minecraftforge.client.event.ClientChatReceivedEvent event) {
+    public void onChat(net.minecraftforge.client.event.ClientChatReceivedEvent event) {
         if (mc.thePlayer == null || mc.theWorld == null || !MainConfig.enableBlacklist) return;
         String regex = "\\[\\d{2}:\\d{2}\\]";
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText()).replaceFirst(regex, "");
@@ -46,8 +45,8 @@ public class Actions {
 
     }
 
-    @Subscribe
-    public static void onWorldLoad(WorldLoadEvent event) {
+    @SubscribeEvent
+    public void onTick(TickEvent event) {
         if (mc.thePlayer == null || mc.theWorld == null || !MainConfig.enableNotifyOnJoinLobby || !MainConfig.enableBlacklist)
             return;
         NetHandlerPlayClient netHandler = mc.getNetHandler();

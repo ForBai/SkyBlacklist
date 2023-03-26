@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.Map;
 
 import static cc.polyfrost.example.SkyBlacklist.mc;
 
@@ -36,7 +37,7 @@ public class BlackListConfig {
             json = new String(Files.readAllBytes(file.toPath()));
             //parse json file
             GsonBuilder builder = new GsonBuilder();
-            HashMap<String, String[]> blackList = builder.create().fromJson(json, HashMap.class);
+            Map<String, String[]> blackList = builder.create().fromJson(json, HashMap.class);
             BlackList.setBlackList(blackList);
             blackListFile = file;
         } catch (Exception e) {
@@ -53,7 +54,7 @@ public class BlackListConfig {
 
 
     public static void saveToFile(File file) {
-        HashMap<String, String[]> blackList = BlackList.getBlackList();
+        Map<String, String[]> blackList = BlackList.getBlackList();
         //save it as a json file
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
