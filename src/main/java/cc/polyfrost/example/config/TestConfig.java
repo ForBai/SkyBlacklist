@@ -16,11 +16,6 @@ import cc.polyfrost.oneconfig.config.data.OptionSize;
  * See <a href="https://docs.polyfrost.cc/oneconfig/config/adding-options">this link</a> for more config Options
  */
 public class TestConfig extends Config {
-    @HUD(
-            name = "Example HUD"
-    )
-    public TestHud hud = new TestHud();
-
     @Switch(
             name = "Example Switch",
             size = OptionSize.SINGLE // Optional
