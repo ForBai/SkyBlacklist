@@ -60,9 +60,10 @@ public class MainConfig extends Config {
     @Button(name = "Add Player", text = "Add", description = "Add player to blacklist", category = "Manage", subcategory = "Add", size = OptionSize.DUAL)
     public Runnable addPlayer = () -> {
         //add player to blacklist
-        if (nameAdd != null && !nameAdd.isEmpty())
+        if (nameAdd != null && !nameAdd.isEmpty()) {
             BlackList.addPlayer(nameAdd, reason);
-        else ChatUtils.sendModMessage("Name is empty");
+            BlackListConfig.saveToFile();
+        } else ChatUtils.sendModMessage("Name is empty");
     };
 
     @Text(name = "Name", description = "Name of the player", category = "Manage", subcategory = "Remove", placeholder = "Username", size = OptionSize.DUAL)
@@ -71,9 +72,10 @@ public class MainConfig extends Config {
     @Button(name = "Remove Player", text = "Remove", description = "Remove player from blacklist", category = "Manage", subcategory = "Remove", size = OptionSize.DUAL)
     public Runnable removePlayer = () -> {
         //remove player from blacklist
-        if (nameRemove != null && !nameRemove.isEmpty())
+        if (nameRemove != null && !nameRemove.isEmpty()) {
             BlackList.removePlayerName(nameRemove);
-        else ChatUtils.sendModMessage("Name is empty");
+            BlackListConfig.saveToFile();
+        } else ChatUtils.sendModMessage("Name is empty");
     };
 
     //input for blacklist file name
@@ -81,7 +83,7 @@ public class MainConfig extends Config {
     public String fileNameSave = "blacklist";
 
     //button to save blacklist to file
-    @Button(name = "Save Blacklist", text = "Save", description = "Save blacklist to file", category = "Save", subcategory = "File", size = OptionSize.DUAL)
+    @Button(name = "Save Blacklist", text = "Save", description = "Save blacklist to file", category = "File", subcategory = "Save", size = OptionSize.DUAL)
     public Runnable saveBlacklist = () -> {
         //save blacklist to file
         if (fileNameSave != null && !fileNameSave.isEmpty())
@@ -89,16 +91,17 @@ public class MainConfig extends Config {
         else ChatUtils.sendModMessage("File name is empty");
     };
 
+
     //input for blacklist file name
     @Text(name = "File Name", description = "Name of the blacklist file", category = "File", subcategory = "Load", placeholder = "blacklist.json", size = OptionSize.DUAL)
     public String fileNameLoad = "blacklist";
 
     //button to load blacklist from file
-    @Button(name = "Load Blacklist", text = "Load", description = "Load blacklist from file", category = "Load", subcategory = "File", size = OptionSize.DUAL)
+    @Button(name = "Load Blacklist", text = "Load", description = "Load blacklist from file", category = "File", subcategory = "Load", size = OptionSize.DUAL)
     public Runnable loadBlacklist = () -> {
         //load blacklist from file
         if (fileNameLoad != null && !fileNameLoad.isEmpty()) {
-            BlackListConfig.changeFile(fileNameLoad);
+            BlackListConfig.loadFromFile(fileNameLoad);
 
         } else ChatUtils.sendModMessage("File name is empty");
 
@@ -106,18 +109,22 @@ public class MainConfig extends Config {
 
     //reload blacklist from file
     //button to reload blacklist from file
-    @Button(name = "Reload Blacklist", text = "Reload", description = "Reload blacklist from file", category = "Reload", subcategory = "File", size = OptionSize.DUAL)
+    @Button(name = "Reload Blacklist", text = "Reload", description = "Reload blacklist from file", category = "File", subcategory = "Reload", size = OptionSize.DUAL)
     public Runnable reloadBlacklist = BlackListConfig::reload;
 
     //button to open blacklist file
-    @Button(name = "Open Blacklist File", text = "Open File", description = "Open blacklist file", category = "Open", subcategory = "File", size = OptionSize.DUAL)
+    @Button(name = "Open Blacklist File", text = "Open File", description = "Open blacklist file", category = "File", subcategory = "Open", size = OptionSize.DUAL)
     public Runnable openBlacklistFile = () -> {
         //open blacklist file
-
+        try {
+            Desktop.getDesktop().open(BlackListConfig.blackListFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     };
 
     //button to open blacklist folder
-    @Button(name = "Open Blacklist Folder", text = "Open Folder", description = "Open blacklist folder", category = "Open", subcategory = "Folder", size = OptionSize.DUAL)
+    @Button(name = "Open Blacklist Folder", text = "Open Folder", description = "Open blacklist folder", category = "File", subcategory = "Open", size = OptionSize.DUAL)
     public Runnable openBlacklistFolder = () -> {
         //open blacklist folder BlackListConfig.blackListFolder
         try {
@@ -127,7 +134,6 @@ public class MainConfig extends Config {
         }
 
     };
-
 
     public MainConfig() {
         super(new Mod(SkyBlacklist.NAME, ModType.HYPIXEL), SkyBlacklist.MODID + ".json");

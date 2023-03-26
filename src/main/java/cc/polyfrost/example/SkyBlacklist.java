@@ -1,7 +1,7 @@
 package cc.polyfrost.example;
 
 import cc.polyfrost.example.blacklist.BlackListConfig;
-import cc.polyfrost.example.command.ExampleCommand;
+import cc.polyfrost.example.command.BlackListCommand;
 import cc.polyfrost.example.config.MainConfig;
 import cc.polyfrost.oneconfig.events.event.InitializationEvent;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
@@ -32,7 +32,7 @@ public class SkyBlacklist {
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
         config = new MainConfig();
-        CommandManager.INSTANCE.registerCommand(new ExampleCommand());
+        CommandManager.INSTANCE.registerCommand(new BlackListCommand());
         BlackListConfig.init();
         //add shutdown hook
         //save config

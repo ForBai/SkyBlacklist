@@ -3,6 +3,7 @@ package cc.polyfrost.example.blacklist;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.HashMap;
 
 import static cc.polyfrost.example.SkyBlacklist.mc;
@@ -23,12 +24,33 @@ public class BlackListConfig {
                 e.printStackTrace();
             }
         }
-
     }
 
     public static void loadFromFile(File file) {
-
+        if (!file.exists()){
+            return;
+        }
+        String json = "";
+        //load json file
+        try {
+            json = new String(Files.readAllBytes(file.toPath()));
+            //parse json file
+            GsonBuilder builder = new GsonBuilder();
+            HashMap<String, String[]> blackList = builder.create().fromJson(json, HashMap.class);
+            BlackList.setBlackList(blackList);
+            blackListFile = file;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    public static void loadFromFile() {
+        loadFromFile(blackListFile);
+    }
+
+    public static void loadFromFile(String name) {
+        loadFromFile(new File(blackListFolder, name + ".json"));
+    }
+
 
     public static void saveToFile(File file) {
         HashMap<String, String[]> blackList = BlackList.getBlackList();
@@ -61,25 +83,6 @@ public class BlackListConfig {
         saveToFile(blackListFile);
     }
 
-    public static void loadFromFile() {
-        loadFromFile(blackListFile);
-    }
-
-    public static void loadFromFile(String name) {
-        loadFromFile(new File(blackListFolder, name + ".json"));
-    }
-
-    public static void changeFile(File file) {
-        saveToFile();
-        blackListFile = file;
-        loadFromFile();
-    }
-
-    public static void changeFile(String name) {
-        saveToFile();
-        blackListFile = new File(blackListFolder, name + ".json");
-        loadFromFile();
-    }
 
     public static void reload() {
         saveToFile();

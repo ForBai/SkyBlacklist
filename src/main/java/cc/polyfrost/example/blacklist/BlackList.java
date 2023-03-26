@@ -111,4 +111,8 @@ public class BlackList {
     public static HashMap<String, String[]> getBlackList() {
         return blackList;
     }
+
+    public static void setBlackList(HashMap<String, String[]> blackList) {
+        BlackList.blackList = blackList;
+    }
 }
